@@ -61,8 +61,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-       "http://localhost:3000",
-    "https://your-frontend.vercel.app",
+    "http://localhost:3000",
+    "https://expense-tracker-1.onrender.com",
 ]
 
 ROOT_URLCONF = 'backend.urls'
