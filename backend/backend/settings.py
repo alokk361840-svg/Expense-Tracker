@@ -20,7 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(1-ew7r@@$=yw_)g$mv#^6s#mo2_^(_hh^oa$e@-hc4c6x22$!'
+# SECRET_KEY = 'django-insecure-(1-ew7r@@$=yw_)g$mv#^6s#mo2_^(_hh^oa$e@-hc4c6x22$!'
+
+import os 
+from pathlib import Path 
+
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-key")
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".onrender.com"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'expense',
-    'corsheaders',   #cross origion resourse sharing  
+    'corsheaders',   #cross origion resourse sharing 
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +60,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+       "http://localhost:3000",
+    "https://your-frontend.vercel.app",
+]
 
 ROOT_URLCONF = 'backend.urls'
 
