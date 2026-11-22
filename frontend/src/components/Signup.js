@@ -3,6 +3,7 @@ import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {useNavigate} from "react-router-dom";
 
+const API = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
 
 const Signup = () => {
       const navigate = useNavigate();
@@ -19,9 +20,9 @@ const Signup = () => {
        const handleSubmit = async(e) => {
         e.preventDefault();
         try{
-          const response = await fetch("http://127.0.0.1:8000/api/signup/",{
+          const response = await fetch(`${API}/api/signup/`,{
             method : 'POST',
-            header: {'content-Type':'application/json'},
+            headers: {'Content-Type':'application/json'},
             body: JSON.stringify(formData)
           });
           if(response.status===201){

@@ -5,6 +5,8 @@ import  {Pie} from  'react-chartjs-2';
 import {Chart, ArcElement, Tooltip , Legend} from 'chart.js';
 
 
+const API = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
+
 Chart.register(ArcElement, Tooltip , Legend);
 
 const Dashboard = () => {
@@ -57,7 +59,7 @@ const Dashboard = () => {
 
     const fetchExpenses = async (userId) => {
         try{
-            const response = await fetch(`http://127.0.0.1:8000/api/manage_expense/${userId}`);
+            const response = await fetch(`${API}/api/manage_expense/${userId}`);
             const data = await response.json();
             setExpenses(data);
             calculateTotals(data);

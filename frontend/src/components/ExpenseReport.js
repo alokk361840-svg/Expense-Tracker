@@ -3,6 +3,8 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
+const API = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
+
 const ExpenseReport = () => {
 
      const navigate = useNavigate();
@@ -22,7 +24,7 @@ const ExpenseReport = () => {
       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await fetch(`http://127.0.0.1:8000/api/search_expense/${userId}/?from=${fromData}&to=${toData}`);
+          const response = await fetch(`${API}/api/search_expense/${userId}/?from=${fromData}&to=${toData}`);
 
           const data = await response.json();
           setExpenses(data.expenses);

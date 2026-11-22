@@ -4,6 +4,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
 
+const API = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
+
 const ManageExpence = () => {
       const navigate = useNavigate();
       const [expenses,setExpenses] = useState([]);
@@ -28,7 +30,7 @@ const ManageExpence = () => {
 
       const fetchExpenses = async (userId) => {
         try{
-            const response = await fetch(`http://127.0.0.1:8000/api/manage_expense/${userId}`);
+            const response = await fetch(`${API}/api/manage_expense/${userId}`);
             const data = await response.json();
             setExpenses(data);
         }
@@ -39,9 +41,9 @@ const ManageExpence = () => {
 
         const handleUpdate = async () => {
         try{
-            const response = await fetch(`http://127.0.0.1:8000/api/update_expense/${editExpense.id}/`,{
+            const response = await fetch(`${API}/api/update_expense/${editExpense.id}/`,{
                  method: "PUT",
-        header: { "content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(editExpense)
             });
             if(response.status === 200){
@@ -63,7 +65,7 @@ const ManageExpence = () => {
       const handleDelete = async (expenseId) => {
         if(window.confirm('Are you sure you want to delete this expense?')){
         try{
-            const response = await fetch(`http://127.0.0.1:8000/api/delete_expense/${expenseId}/`,{
+            const response = await fetch(`${API}/api/delete_expense/${expenseId}/`,{
                  method: "DELETE",
             });
             if(response.status === 200){
