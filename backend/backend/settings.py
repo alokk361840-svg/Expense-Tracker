@@ -62,7 +62,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "https://expense-tracker-1.onrender.com",
+    "https://expense-tracker-1-ns10.onrender.com",
 ]
 
 ROOT_URLCONF = 'backend.urls'
