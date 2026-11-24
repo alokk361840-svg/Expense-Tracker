@@ -28,7 +28,7 @@ const Signup = () => {
           if(response.status===201){
             toast.success('Signup successfull! Please login.');
             setTimeout(() => {
-                navigate('/login');
+                navigate('/dashboard');
             },2000);
           }
           else{
