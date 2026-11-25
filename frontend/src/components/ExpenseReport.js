@@ -32,9 +32,9 @@ const ExpenseReport = () => {
             toast.error(data.error || "Server error");
             return;
           }
-          
-          setExpenses(data.expenses);
-          setGrandTotal(data.total);
+
+          setExpenses(data.expenses || []);
+          setGrandTotal(data.total || 0);
 
 
         } catch (error) {
