@@ -5,6 +5,8 @@ from .models import *
 # Create your views here.
 from django.db.models import Sum
 
+import traceback
+
 #Signup API
 @csrf_exempt
 def signup(request):
@@ -98,6 +100,7 @@ def delete_expense(request,expense_id):
 @csrf_exempt
 def search_expense(request,user_id):
     if request.method == 'GET':  
+      try:
         from_date = request.GET.get('from')
         to_date = request.GET.get('to')    
         
@@ -106,6 +109,10 @@ def search_expense(request,user_id):
         agg = expenses.aggregate(Sum('ExpenseCost'))  #{'ExpenseCost__Sum':3500 like this it return}
         total = agg['ExpenseCost__sum'] or 0
         return JsonResponse({'expenses':expense_list,'total':total})
+      except Exception as e:
+        traceback.print_exc()
+        return JsonResponse({'error': str(e)}, status=500)
+      return JsonResponse({'message': 'Invalid request'}, status=405)
     
 
 @csrf_exempt
