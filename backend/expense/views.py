@@ -3,7 +3,8 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from .models import *
 # Create your views here.
-from django.db.models import Sum
+from django.db.models import Sum, FloatField
+from django.db.models.functions import Cast
 
 import traceback
 
@@ -106,8 +107,12 @@ def search_expense(request,user_id):
         
         expenses = Expense.objects.filter(UserId=user_id,ExpenseDate__range=[from_date,to_date])
         expense_list = list(expenses.values())
-        agg = expenses.aggregate(Sum('ExpenseCost'))  #{'ExpenseCost__Sum':3500 like this it return}
-        total = agg['ExpenseCost__sum'] or 0
+        # agg = expenses.aggregate(Sum('ExpenseCost'))  #{'ExpenseCost__Sum':3500 like this it return}
+        # total = agg['ExpenseCost__sum'] or 0
+        agg = expenses.aggregate(
+            total= Sum(Cast('ExpenseCost',FloatField()))
+        )
+        total = agg['total'] or 0
         return JsonResponse({'expenses':expense_list,'total':total})
       except Exception as e:
         traceback.print_exc()
