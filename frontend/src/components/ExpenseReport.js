@@ -27,6 +27,12 @@ const ExpenseReport = () => {
           const response = await fetch(`${API}/api/search_expense/${userId}/?from=${fromData}&to=${toData}`);
 
           const data = await response.json();
+          if(!response.ok){
+            console.error("Backend error:", data);
+            toast.error(data.error || "Server error");
+            return;
+          }
+          
           setExpenses(data.expenses);
           setGrandTotal(data.total);
 
